@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<center>
+<h2>Update Paciente</h2>
+
+<form action="" method="POST">
+	{% csrf_token %}
+	{{form.as_p}}
+	<input type="submit" name="Update" class="btn btn-secondary">
+</form>
+</center>
+{% endblock %}

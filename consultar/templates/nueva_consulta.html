@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<h2>Nueva Consulta</h2>
+
+{% if submitted %}
+	<center><b>se ha subido con exito</b></center>
+{% endif %}
+<form action="" method="POST">
+	{% csrf_token %}
+	{{form.as_p}}
+	<input type="submit" name="Update" class="btn btn-secondary">
+
+{% endblock %}

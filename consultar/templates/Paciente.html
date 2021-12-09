@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card">
+	<center><h2>Consultar</h2></center>
+  <div class="card-body">
+  	<form action="" method="POST">
+  		{% csrf_token %}
+
+		<input type="text" name="input-busqueda" class="form-control" placeholder="Ingresa el id de tu consulta (default = 1)">
+		<button type="submit" class="btn btn-secondary">Buscar</button>
+		
+		{% if submitted %}
+			<table class='table table-bordered'>
+				
+				
+				
+				
+				<thead class='thead-dark'>
+						<tr>
+						<th class="col">id</th>
+						<th class="col">razon de consulta</th>
+						<th class="col">diagnostico</th>
+						<th class="col">requiere examen</th>
+						<th class="col">requiere especialista</th>
+						<th class="col">prescipcion</th>
+						<th class="col">checkup</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for dato in dataclinic %}
+
+						{% if consulta_busqueda == dato.idataclinicid %}
+							<tr>
+								<td>{{dato.idataclinicid}}</td>
+								<td>{{dato.vreasonconsult}}</td>
+								<td>{{dato.vdifferentialdx}}</td>
+								{%if dato.iexamid%}
+									<td>{{dato.iexamid.vclinicinfoexam}}</td>
+								{% else %}
+									<td>No require examen</td>
+								{% endif %}
+								{% if dato.ispecialistid %}
+									<td>
+										<ul>{{dato.ispecialistid.varea}}</ul>
+										<ul>{{dato.ispecialistid.vname}}</ul>
+									</td>
+								{% else %}
+									<td>No requiere especialista</td>
+								{% endif %}
+								{% if dato.brequiresprescription == '' %}
+									<td>{{dato.iprescriptionid}}</td>
+								{% else %}
+									<td>No requieres prescripcion</td>
+								{% endif %}
+								{% if dato.dcheckupdate == '' %}
+									<td>{{dato.dcheckupdate}}</td>
+								{% else %}
+									<td>No hay fecha</td>
+								{% endif %}
+								<td align="right"><a href="{% url 'update_consultar' dato.idataclinicid%}" class="btn btn-outline-secondary btn-sm">Update</a></td>
+							</tr>
+
+						{% endif %}
+
+				</tbody>
+					
+					{% endfor %}
+					
+					
+			</table>
+		{% endif %}
+		<!-- <button type="submit" class="btn btn-primary">Finalizar consulta</button> -->
+			
+	</form>
+  </div>
+</div>
+<br>
+<hr>
+<br>
+
+<div class="card">
+	<center><h2>Consultar informacion de paciente</h2></center>
+  <div class="card-body">
+  	<form action="" method="POST">
+  		{% csrf_token %}
+
+		<input type="text" name="input-busqueda-paciente" class="form-control" placeholder="Ingresa el id de tu consulta (default = 1)">
+		<button type="submit" class="btn btn-secondary">Buscar</button>
+
+		
+		{% if submitted %}
+			<table class='table table-bordered'>
+				
+				
+				
+				
+				<thead class='thead-dark'>
+						<tr>
+						<th class="col">id</th>
+						<th class="col">data admin</th>
+						<th class="col">data clinic</th>
+						<th class="col">personel id</th>
+						<th class="col">tage</th>
+						<th class="col">csex</th>
+						<th class="col">patient status</th>
+						<th class="col">thealth</th>
+						<th class="col">full name</th>
+						<th class="col">blood type</th>
+						<th class="col">antigen</th>
+						<th class="col">comorbility</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for dato in patient %}
+						{% if consulta_busqueda_paciente == dato.ipatientid %}
+							<tr>
+								<td>{{dato.ipatientid}}</td>
+								<td>{{dato.idataadminid.vdescriptiondischarge}}</td>
+								<td>{{dato.idataclinicid.vreasonconsult}}</td>
+								<td>{{dato.ipersonelid.vname}}</td>
+								<td>{{dato.tage}}</td>
+								<td>{{dato.csex}}</td>
+								<td>{{dato.bpatientstatus.vstatustext}}</td>
+								<td>{{dato.thealth.vhealthstatus}}</td>
+								<td>{{dato.vfullname}}</td>
+								<td>{{dato.ibloodtypeid.vbloodtype}}</td>
+								<td>{{dato.iantigenid.cantigen}}</td>
+								<td>{{dato.icomorbility.vriskfactor}}</td>
+								<td align="right"><a href="{% url 'update_paciente' dato.ipatientid%}" class="btn btn-outline-secondary btn-sm">Update</a></td>
+							</tr>
+
+						{% endif %}
+					{% endfor %}
+
+				</tbody>
+					
+					
+					
+			</table>
+		{% endif %}
+		<!-- <button type="submit" class="btn btn-primary">Finalizar consulta</button> -->
+			
+	</form>
+  </div>
+</div>
+{% endblock %}

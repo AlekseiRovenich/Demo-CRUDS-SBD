@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% if submitted %}
+	<center><b>se ha subido con exito</b></center>
+{% endif %}
+	<center><h2>Nuevo Paciente</h2></center>
+	<center>
+		<form action='' method="POST">
+			{% csrf_token %}
+			{{form.as_p}}
+			<input type="submit" name="New" class="btn btn-secondary">
+
+		</form>
+	</center>
+	
+{% endblock %}
